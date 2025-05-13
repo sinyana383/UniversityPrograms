@@ -1,0 +1,3 @@
+﻿  Program.cpp
+C:\Workplace\Github\Cprojects\Task_queue_head_tail\Task_queue_head_tail\Program.cpp(161,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  Task_queue_head_tail.vcxproj -> C:\Workplace\Github\Cprojects\Task_queue_head_tail\x64\Debug\Task_queue_head_tail.exe
