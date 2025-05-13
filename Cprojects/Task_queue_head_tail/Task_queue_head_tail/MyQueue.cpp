@@ -4,10 +4,10 @@ MyQueue::MyQueue() {
     head = tail = nullptr;   N_op += 2;
 }
 MyQueue::~MyQueue() {
-    node* temp = nullptr;   ++N_op;
+    node* temp = nullptr;   N_op += 1;
     
     while (!IsEmpty()) {    N_op += 2;
-        Pop();              ++N_op;
+        Pop();              N_op += 1;
     }
 }
 bool MyQueue::IsEmpty() {
@@ -26,19 +26,22 @@ int MyQueue::Pop() {
     int value = temp->value;    N_op += 2;
 
     head = head->next;          N_op += 2;
-    if (head == nullptr) {      N_op += 2;
-        tail = nullptr;
+                                N_op += 1;
+    if (head == nullptr) {
+        tail = nullptr;         N_op += 1;
     }
 
-    delete temp;                N_op += 2;
+    delete temp;                N_op += 1;
+                                N_op += 1;
     return value;
 }
 void MyQueue::Push(int value) { N_op += 1;
-    node* temp = new node;      N_op += 2;
+    node* temp = new node;      N_op += 1;
     temp->value = value;        N_op += 2;
     temp->next = nullptr;       N_op += 2;
 
-    if (IsEmpty()) {            N_op += 1;
+                                N_op += 1;
+    if (IsEmpty()) {            
         head = tail = temp;     N_op += 2;
     }
     else {
@@ -54,5 +57,5 @@ void MyQueue::Display() {
         std::cout << temp->value << " ";    N_op += 3;
         temp = temp->next;                  N_op += 2;
     }
-    std::cout << std::endl;         N_op += 1;
+    std::cout << std::endl;                 N_op += 1;
 }

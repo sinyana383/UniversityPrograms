@@ -13,8 +13,10 @@ public:
 };
 
 int Numbers::Get(MyQueue& q, int index) {
-    if (index < 0) {                        N_op += 4;
-        std::cout << "Error" << std::endl;
+                                            N_op += 1;
+    if (index < 0) {                        
+        std::cout << "Error" << std::endl;  N_op += 2;
+                                            N_op += 1;
         return -1;
     }
 
@@ -22,55 +24,61 @@ int Numbers::Get(MyQueue& q, int index) {
     int value = -1;             N_op += 1;
     int currentPos = 0;         N_op += 1;
 
-    while (!q.IsEmpty()) {
-        int val = q.Pop();
+                                    N_op += 3; // будет лишние +2, если зайти в цикл. Но зато будет 2, если проверяем, но не заходим
+    while (!q.IsEmpty()) {          N_op += 3;
+        int val = q.Pop();          N_op += 3;
+                                    N_op += 1;
         if (currentPos == index) {
-            value = val;
+            value = val;            N_op += 1;
         }
-        temp.Push(val);
-        currentPos++;
+        temp.Push(val);             N_op += 3;
+        currentPos++;               N_op += 1;
     }
-
-    while (!temp.IsEmpty()) {
-        q.Push(temp.Pop());
+                                    N_op += 3;
+    while (!temp.IsEmpty()) {       N_op += 3;
+        q.Push(temp.Pop());         N_op += 4;
     }
-
+                                    N_op += 1;
     if (index >= currentPos) {
+                                    N_op += 6;
         std::cout << "Error: " << index << " >= queue size (" << currentPos << ")" << std::endl;
+                                    N_op += 1;
         return -1;
     }
-
+                                    N_op += 1;
     return value;
 }
 
-int Numbers::GetSize(MyQueue& q) {
-    MyQueue temp;
-    int size = 0;
-
-    while (!q.IsEmpty()) {
-        temp.Push(q.Pop());
-        ++size;
+int Numbers::GetSize(MyQueue& q) {  N_op += 1;
+    MyQueue temp = nullptr;         N_op += 1;
+    int size = 0;                   N_op += 1;
+                                    N_op += 3;
+    while (!q.IsEmpty()) {          N_op += 3;
+        temp.Push(q.Pop());         N_op += 4;
+        ++size;                     N_op += 1;
     }
-
-    while (!temp.IsEmpty()) {
-        q.Push(temp.Pop());
+                                    N_op += 3;
+    while (!temp.IsEmpty()) {       N_op += 3;
+        q.Push(temp.Pop());         N_op += 4;
     }
-
+                                    N_op += 1;
     return size;
 }
 
-void Numbers::Set(MyQueue& q, int index, int newValue) {
+void Numbers::Set(MyQueue& q, int index, int newValue) {    N_op += 3;
+                                            N_op += 1;
     if (index < 0) {
-        std::cout << "Error" << std::endl;
+        std::cout << "Error" << std::endl;  N_op += 2;
+                                            N_op += 1;
         return;
     }
 
-    MyQueue temp;
-    int currentPos = 0;
-    bool indexFound = false;
+    MyQueue temp = nullptr;                 N_op += 1;
+    int currentPos = 0;                     N_op += 1;
+    bool indexFound = false;                N_op += 1;
 
-    while (!q.IsEmpty()) {
-        int val = q.Pop();
+    while (!q.IsEmpty()) {                  N_op += 3;
+        int val = q.Pop();                  N_op += 3;
         if (currentPos == index) {
             val = newValue;
             indexFound = true;
